@@ -1,8 +1,12 @@
 # Compiled class file
 *.class
 
+# Temporary asl files
+*.asl~
+
 # Log file
 *.log
+
 
 # BlueJ files
 *.ctxt
