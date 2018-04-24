@@ -1,0 +1,42 @@
+// Agent ba in project ierHF.mas2j
+
+
+
+/* Initial beliefs and rules */
+
+
+
+/* Initial goals */
+
+
+
++!catastrophe : accident <- .print("Mentõk értesítése").
++!catastrophe : robbery <- .print("Rendõrök értesítése");
+							.print("Értesítem az intézmény vezetõjét").
++!catastrophe : firealert <- .print("Tûzoltók értesítése");
+								.send(ta,tell,phonefire);
+								.print("Menekülõutak biztosítása.");
+								.send(ta,tell,phonefire);
+								.print("Liftek megálltása a legközelebbi emeleten.");
+								.send(ta,tell,phonefire);
+								.print("Mélygarázs kinyitása.");
+								.send(ta,tell,phonefire);
+								.print("Figyelmeztetés hangszórón keresztül a tûzesetrõl.");
+								.send(ta,tell,phonefire).
+							
+
+
+
+
+/* Plans */
+
+
+
++firealert[source(A)]: true <- .print("Tüz elleni protokol indítása"); !catastrophe.
+
+
++nofirealert[source(A)]: true <- .print("Minden rendben").
+
++robbery[source(A)]: true <- .print("Betörés elleni protokol indítása"); !catastrophe.
+
++accident[source(A)]: true <- .print("Baleset elleni protokol indítása"); !catastrophe.

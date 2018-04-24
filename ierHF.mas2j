@@ -1,0 +1,26 @@
+/* Jason Project */
+
+
+
+MAS ierHF {
+
+
+
+    infrastructure: Centralised
+	
+   
+
+    environment: Env
+
+    agents:
+
+        ta;
+
+        ba;
+		
+	
+		
+
+}
+
+
