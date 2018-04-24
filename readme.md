@@ -1,4 +1,4 @@
-## SmartServerRoomsAI 
+# SmartServerRoomsAI 
 
 Az alkalmazásunk az AgentSpeak Jason libraryt használja.
 
@@ -23,7 +23,7 @@ A szobák az alábbi ágensekkel rendelkeznek:
 - Biztonsági Rendszer (Security System)
 - Védelmi rendszer (Safety System)
 
-# Funcionalitás:
+## Funcionalitás:
 
 Biztonsági rendszer (Security System)
 - Ha be van kapcsolva a riasztó és mozgás van, akkor ezt jelezzük
