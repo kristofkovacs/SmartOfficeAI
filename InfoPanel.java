@@ -1,4 +1,5 @@
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,8 +41,11 @@ public class InfoPanel extends JPanel {
 		console = new JTextArea();
 		console.setRows(20);
 		console.setColumns(50);
-		console.setAutoscrolls(true);
 		ConsolePanel.add(console);
+		
+		JScrollPane scroll = new JScrollPane (console, 
+				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		ConsolePanel.add(scroll);
 	}
 
 	private void initSystemInformationPanel() {
