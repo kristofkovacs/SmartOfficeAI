@@ -13,13 +13,10 @@ MAS ierHF {
     environment: Env
 
     agents:
-
-        ta;
-
-        ba;
-		
-	
-		
+        room;
+		room;
+		room;
+		room;
 
 }
 
