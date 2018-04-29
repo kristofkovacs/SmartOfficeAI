@@ -4,6 +4,9 @@
 # Temporary asl files
 *.asl~
 
+#Temporary mas2j files
+*.mas2j~
+
 # Log file
 *.log
 
