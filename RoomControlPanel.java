@@ -11,14 +11,14 @@ import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
 import javax.swing.JSpinner;
 
-public class RoomControlPanel extends JPanel implements RoomControl{
+public class RoomControlPanel extends JPanel implements RoomControl {
 
 	private static final String motionStr = "Mozgás";
 	private static final String smokeStr = "Füst";
 	private static final String alarmStr = "Riasztó kezelőpanel";
 	private static final String temperatureStr = "Hőmérséklet";
 	private static final String alarmedStr = "Riasztó élesítés";
-	
+
 	private static final int spinnerDefaultValue = 24;
 
 	private int roomNumber = 1;
@@ -30,7 +30,7 @@ public class RoomControlPanel extends JPanel implements RoomControl{
 	private JPanel panel2;
 
 	private JPanel panel3;
-	
+
 	private JSpinner temperatureSpinner;
 	private JTextField alarmTextInput;
 	private JCheckBox smokeCB;
@@ -48,7 +48,6 @@ public class RoomControlPanel extends JPanel implements RoomControl{
 
 		panel1 = new JPanel(subPanelLayout, true);
 		add(panel1);
-		
 
 		JLabel lblTemperature = new JLabel(temperatureStr);
 		panel1.add(lblTemperature);
@@ -69,7 +68,7 @@ public class RoomControlPanel extends JPanel implements RoomControl{
 
 		panel3 = new JPanel(subPanelLayout, true);
 		add(panel3);
-		
+
 		smokeCB = new JCheckBox(smokeStr);
 		smokeCB.setHorizontalTextPosition(SwingConstants.LEFT);
 		panel3.add(smokeCB);
@@ -77,17 +76,17 @@ public class RoomControlPanel extends JPanel implements RoomControl{
 		motionCB = new JCheckBox(motionStr);
 		motionCB.setHorizontalTextPosition(SwingConstants.LEFT);
 		panel3.add(motionCB);
-		
+
 		alarmedCB = new JCheckBox(alarmedStr);
 		alarmedCB.setHorizontalTextPosition(SwingConstants.LEFT);
 		panel3.add(alarmedCB);
 
 	}
-	
+
 	public int getRoomNumber() {
 		return roomNumber;
 	}
-	
+
 	public void clearFields() {
 		temperatureSpinner.setValue(spinnerDefaultValue);
 		alarmTextInput.setText("");
@@ -95,24 +94,38 @@ public class RoomControlPanel extends JPanel implements RoomControl{
 		motionCB.setSelected(false);
 		alarmedCB.setSelected(false);
 	}
-	
+
 	public int getTemperatureSensorValue() {
 		return (int) temperatureSpinner.getValue();
 	}
-	
+
 	public String getAlarmTextInputValue() {
 		return "" + alarmTextInput.getText();
 	}
-	
+
 	public boolean isThereSmoke() {
 		return smokeCB.isSelected();
 	}
-	
+
 	public boolean isThereMotion() {
 		return motionCB.isSelected();
 	}
-	
+
 	public boolean isAlarmed() {
 		return alarmedCB.isSelected();
 	}
+}
+
+interface RoomControl {
+	public int getRoomNumber();
+
+	public int getTemperatureSensorValue();
+
+	public String getAlarmTextInputValue();
+
+	public boolean isThereSmoke();
+
+	public boolean isThereMotion();
+
+	public boolean isAlarmed();
 }

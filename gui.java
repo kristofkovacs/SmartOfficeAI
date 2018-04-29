@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class GUI implements ActionListener {
 	public static final String windowTitle = "Intelligens Elosztott Rendszerek - 2018";
@@ -12,6 +13,7 @@ public class GUI implements ActionListener {
 	public static final String roomControlSubPanelTitle = "Szerverszoba ";
 	public static final String infoPanelTitle = "Rendszer információk";
 	public static final String consolePanelTitle = "Rendszer konzol";
+	public static final int numberOfAgents = 4;
 
 	Window window;
 
@@ -22,7 +24,7 @@ public class GUI implements ActionListener {
 	// Szenzor adatok küldése gomb eseménykezelő
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		window.getRooms();
+		window.getRoomControls();
 		// TODO send data to env
 
 	}
@@ -33,45 +35,13 @@ public class GUI implements ActionListener {
 		String logStr = " [ " + timeStamp.toString() + " ] " + " - " + str;
 		window.log(logStr);
 	}
-
-	public void turnOnAlarm(String message) {
-		window.setAlarm(message);
+	
+	public List<RoomControl> getRoomControls() {
+		return window.getRoomControls();
 	}
-
-	public void turnOffAlarm() {
-		window.setAlarm(null);
-	}
-
-	public void callFireFighters() {
-		window.callFireFighers(true);
-	}
-
-	public void stopCallingFireFighters() {
-		window.callFireFighers(false);
-	}
-
-	public void callPolice() {
-		window.callPolice(true);
-	}
-
-	public void stopCallingPolice() {
-		window.callPolice(false);
-	}
-
-	public void closeDoors(int roomNumber) {
-		window.closeDoors(roomNumber, true);
-	}
-
-	public void openDoors(int roomNumber) {
-		window.closeDoors(roomNumber, false);
-	}
-
-	public void startingBackup(int fromRoom, int toRoom) {
-		window.startBackup(fromRoom, toRoom, true);
-	}
-
-	public void backupFinished(int fromRoom, int toRoom) {
-		window.startBackup(fromRoom, toRoom, false);
+	
+	public List<AgentInfo> getAgentOutputs(){
+		return window.getRoomOutputs();
 	}
 
 	// for test purposes

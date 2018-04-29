@@ -3,6 +3,7 @@ import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.List;
 import java.awt.GridLayout;
@@ -15,19 +16,21 @@ public class RoomControlMainPanel extends JPanel {
 	private static final String clearFieldsStr = "Mezők törlése";
 	private static final String sendSensorDataStr = "Szenzor adatok küldése";
 	
-	private List<RoomControl> rooms;
+	private List<RoomControl> roomControls;
 
 	public RoomControlMainPanel(GUI gui) {
-		super(new GridLayout(5, 1, 0, 0), true);
+		super(new GridLayout(GUI.numberOfAgents + 1, 1, 0, 0), true);
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), GUI.roomControlPanelTitle,
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
-		rooms = new LinkedList<>();
+		setPreferredSize(new Dimension(235, 600));
 		
-		for(int i = 0; i < 4; i++) {
+		roomControls = new LinkedList<>();
+		
+		for(int i = 0; i < GUI.numberOfAgents; i++) {
 			final RoomControlPanel room = new RoomControlPanel(i);
 			add(room); //add to panel
-			rooms.add(room);//add to list
+			roomControls.add(room);//add to list
 		}
 		
 		JPanel buttonPanel = new JPanel();
@@ -40,7 +43,7 @@ public class RoomControlMainPanel extends JPanel {
 		JButton clearFieldsBtn = new JButton(clearFieldsStr);
 		clearFieldsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (RoomControl room : rooms) {
+				for (RoomControl room : roomControls) {
 					((RoomControlPanel)room).clearFields();
 				}
 			}
@@ -48,8 +51,8 @@ public class RoomControlMainPanel extends JPanel {
 		buttonPanel.add(clearFieldsBtn);
 	}
 	
-	public List<RoomControl> getRooms(){
-		return rooms;
+	public List<RoomControl> getRoomControls(){
+		return roomControls;
 	}
 
 }
