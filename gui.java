@@ -16,17 +16,19 @@ public class GUI implements ActionListener {
 	public static final int numberOfAgents = 4;
 
 	Window window;
+	
+	Env environment;
 
-	public GUI() {
+	public GUI(Env env) {
 		window = new Window(this);
+		
+		environment = env;
 	}
 
 	// Szenzor adatok küldése gomb eseménykezelő
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		window.getRoomControls();
-		// TODO send data to env
-
+		env.updateSensorStates(window.getRoomControls());
 	}
 
 	public void log(String str) {
