@@ -1,4 +1,4 @@
-// Agent ta in project ierHF.mas2j
+// Agent safety in project ierHF.mas2j
 
 /* Initial beliefs and rules */
 !start.
@@ -8,10 +8,10 @@
 //state reading
 +!start <-  !!run.
 
-+!run : refresh(A,B,C,D,E,F) <- print("-----Reading states-----"); !checkT_1(A); !checkS_1(B);!checkT_2(C);!checkS_2(D);!checkT_3(E);!checkS_3(F); !!end.
++!run : refresh(A,B,C,D,E,F,G,H) <- print("-----Reading states-----"); !checkT_1(A); !checkS_1(B);!checkT_2(C);!checkS_2(D);!checkT_3(E);!checkS_3(F); !checkT_3(G);!checkS_3(H); !!end.
 +!run <- .print("System error: can't read data from the current states"); !!end.
 
-+!end : (hightemperature_1 & hassmoke_1)|(hightemperature_2 & hassmoke_2)|(hightemperature_3 & hassmoke_3) <- .send(ba,tell,firealert); .wait(5000);  !!start.
++!end : (hightemperature_1 & hassmoke_1)|(hightemperature_2 & hassmoke_2)|(hightemperature_3 & hassmoke_3)|(hightemperature_4 & hassmoke_4) <- .send(ba,tell,firealert); .wait(5000);  !!start.
 +!end  <- .send(ba,untell,firealert); .wait(10000); !!start.
 
 //first serverRoom
