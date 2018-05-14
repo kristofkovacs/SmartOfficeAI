@@ -1,22 +1,15 @@
-	/* Jason Project */
-
-
+/* Jason Project */
 
 MAS ierHF {
 
-
-
     infrastructure: Centralised
 	
-   
-
     environment: Env
 
     agents:
-        room;
-		room;
-		room;
-		room;
+        safety;
+		security;
+		master;
 
 }
 

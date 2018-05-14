@@ -8,11 +8,19 @@
 //state reading
 +!start <-  !!run.
 
-+!run : refresh(A,B,C,D,E,F,G,H,I,J,K,L) <- print("-----Reading states-----"); !checkAlarm_1(A); !checkMovement_1(B); !checkAlarmPin_1(C); !checkAlarm_1(D); !checkMovement_1(E); !checkAlarmPin_1(F);!checkAlarm_1(G); !checkMovement_1(H); !checkAlarmPin_1(C);!checkAlarm_1(A); !checkMovement_1(B); !checkAlarmPin_1(C); !!end.
++!run : refresh(A,B,C,D,E,F,G,H,I,J,K,L) <- print("-----Reading states-----"); 
+!checkAlarm_1(A); !checkMovement_1(B); !checkAlarmPin_1(C); 
+!checkAlarm_2(D); !checkMovement_2(E); !checkAlarmPin_2(F);
+!checkAlarm_3(G); !checkMovement_3(H); !checkAlarmPin_3(I);
+!checkAlarm_4(J); !checkMovement_4(K); !checkAlarmPin_4(L); 
+!!end.
+
 +!run <- .print("System error: can't read data from the current states"); !!end.
 
-+!end : (hightemperature_1 & hassmoke_1)|(hightemperature_2 & hassmoke_2)|(hightemperature_3 & hassmoke_3)|(hightemperature_4 & hassmoke_4) <- .send(ba,tell,firealert); .wait(5000);  !!start.
-+!end  <- .send(ba,untell,firealert); .wait(10000); !!start.
++!end : (alarmOn_1 & movementDetected_1 & !checkAlarmPin_1) <- .send(ba,tell,intrude_1); .wait(30000);  !!start.
++!end : (alarmOn_2 & movementDetected_2 & !checkAlarmPin_2) <- .send(ba,tell,intrude_2); .wait(30000);  !!start.
++!end : (alarmOn_3 & movementDetected_3 & !checkAlarmPin_3) <- .send(ba,tell,intrude_3); .wait(30000);  !!start.
++!end : (alarmOn_4 & movementDetected_4 & !checkAlarmPin_4) <- .send(ba,tell,intrude_4); .wait(30000);  !!start.
 
 //first serverRoom
 +!checkAlarm_1(N) : N == true <- +alarmOn_1; print("The alarm is turned on in the first server room").
