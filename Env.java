@@ -66,7 +66,8 @@ public class Env extends Environment {
 		} catch (Exception e2){
 			e2.printStackTrace();
 		}
-	}
+	}
+
     /** Called before the MAS execution with the args informed in .mas2j */
     @Override
     public void init(String[] args) {

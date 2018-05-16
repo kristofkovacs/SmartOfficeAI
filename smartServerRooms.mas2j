@@ -2,15 +2,15 @@
 
 MAS ierHF {
 
-    infrastructure: Centralised
-	
+	infrastructure: Centralised
+
     environment: Env
 
     agents:
-        safety;
-		security;
+		safety;
+        security;
 		master;
-
+		
 }
 
 
