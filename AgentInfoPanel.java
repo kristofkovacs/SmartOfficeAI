@@ -8,20 +8,20 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class AgentInfoPanel extends JPanel implements AgentInfo {
-	private static final String defaultEmergencyMessage = "Nincs értesítés";
+	private static final String defaultEmergencyMessage = "Nincs ertesites";
 	
-	private static final String defaultAlarmMessage = "Nincs riasztás";
-	private static final String alarmTurnedOn = "Élesítve";
+	private static final String defaultAlarmMessage = "Nincs riasztas";
+	private static final String alarmTurnedOn = "Elesitve";
 	private static final String alarmTurnedOff = "Kikapcsolva";
 	private static final int defaultAlarmCounterValue = 30;
 	
 	private static final String defaultBackupMessage = "Nincs folyamatban";
 	private static final String inProgressMessage = "Folyamatban...";
-	private static final String sendingDataMessage = "Adatok küldése...";
-	private static final String receivingDataMessage = "Adatok fogadása...";
+	private static final String sendingDataMessage = "Adatok kuldese...";
+	private static final String receivingDataMessage = "Adatok fogadasa...";
 	
 	private static final String doorsOpenedMessage = "Nyitva";
-	private static final String doorsClosedMessage = "Zárva";
+	private static final String doorsClosedMessage = "Zarva";
 	
 	private int alarmCounter = defaultAlarmCounterValue;
 
@@ -44,25 +44,25 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 //		setPreferredSize(new Dimension(100, 50));
 		
 		fireFightersTF = new JTextField();
-		createSubPanelWithLabel("Tűzoltók értesítése", fireFightersTF, defaultEmergencyMessage, 10);
+		createSubPanelWithLabel("Tuzoltok ertesitese", fireFightersTF, defaultEmergencyMessage, 10);
 
 		PoliceTF = new JTextField();
-		createSubPanelWithLabel("Rendőrség értesítése", PoliceTF, defaultEmergencyMessage, 10);
+		createSubPanelWithLabel("Rendorseg ertesitese", PoliceTF, defaultEmergencyMessage, 10);
 		
 		backupTF = new JTextField();
-		createSubPanelWithLabel("Biztonsági mentés", backupTF, defaultBackupMessage, 10);
+		createSubPanelWithLabel("Biztonsagi mentes", backupTF, defaultBackupMessage, 10);
 		
 		DoorsTF = new JTextField();
-		createSubPanelWithLabel("Ajtók állapota", DoorsTF, doorsOpenedMessage, 10);
+		createSubPanelWithLabel("Ajtok allapota", DoorsTF, doorsOpenedMessage, 10);
 		
 		alarmStateTF = new JTextField();
-		createSubPanelWithLabel("Riasztó állapota", alarmStateTF, alarmTurnedOff, 10);
+		createSubPanelWithLabel("Riaszto allapota", alarmStateTF, alarmTurnedOff, 10);
 		
 		alarmCounterTF = new JTextField();
-		createSubPanelWithLabel("Riasztó számláló", alarmCounterTF, String.valueOf(alarmCounter), 10);
+		createSubPanelWithLabel("Riaszto szamlalo", alarmCounterTF, String.valueOf(alarmCounter), 10);
 
 		alarmMessageTF = new JTextField();
-		createSubPanelWithLabel("Riasztó üzenet", alarmMessageTF, defaultAlarmMessage, 33);
+		createSubPanelWithLabel("Riaszto uzenet", alarmMessageTF, defaultAlarmMessage, 33);
 		
 	}
 

@@ -13,11 +13,11 @@ import javax.swing.JSpinner;
 
 public class RoomControlPanel extends JPanel implements RoomControl {
 
-	private static final String motionStr = "Mozgás";
-	private static final String smokeStr = "Füst";
-	private static final String alarmStr = "Riasztó kezelőpanel";
-	private static final String temperatureStr = "Hőmérséklet";
-	private static final String alarmedStr = "Riasztó élesítés";
+	private static final String motionStr = "Mozgas";
+	private static final String smokeStr = "Fust";
+	private static final String alarmStr = "Riaszto kezelopanel";
+	private static final String temperatureStr = "Homerseklet";
+	private static final String alarmedStr = "Riaszto elesites";
 
 	private static final int spinnerDefaultValue = 24;
 
@@ -100,7 +100,7 @@ public class RoomControlPanel extends JPanel implements RoomControl {
 	}
 
 	public String getAlarmTextInputValue() {
-		return "" + alarmTextInput.getText();
+		return " " + alarmTextInput.getText();
 	}
 
 	public boolean isThereSmoke() {

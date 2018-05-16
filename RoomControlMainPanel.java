@@ -13,8 +13,8 @@ import java.awt.event.ActionEvent;
 
 public class RoomControlMainPanel extends JPanel {
 	
-	private static final String clearFieldsStr = "Mezők törlése";
-	private static final String sendSensorDataStr = "Szenzor adatok küldése";
+	private static final String clearFieldsStr = "Mezok torlese";
+	private static final String sendSensorDataStr = "Szenzor adatok kuldese";
 	
 	private List<RoomControl> roomControls;
 

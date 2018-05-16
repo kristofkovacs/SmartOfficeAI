@@ -6,19 +6,17 @@
 
 /* Initial goals */
 
-+!run : intrude <- emCall(police);
-							emExit(close);
-							emeGate(close).
-+!run : firealert <- emCall(firefighters);
++!run : intrude <- callPolice(true);emExit(close).
+							
++!run : firealert <- callFireFighters(true);
                                 emDataSave(otherServers);
-								emExit(open);
-								emGate(open);
+								emExit(open);								
 								emServers(shutdown);
 								emSpk("There is fire in the building! Please leave it following the exit instructions.").							
-+!run : <- emCall(standby);
++!run : <- callPolice(false);
+			callFireFighters(false);
 			emServers(start);
 			emExit(manual);
-			emGate(manual);
 			emSpk(" ").		
 
 /* Plans */

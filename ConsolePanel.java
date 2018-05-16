@@ -20,14 +20,16 @@ public class ConsolePanel extends JPanel {
 		
 		setPreferredSize(new Dimension(300, 600));
 		
-		console = new JTextArea();
-		console.setPreferredSize(new Dimension(280,600));
+		console = new JTextArea(35, 28);
+		//console.setPreferredSize(new Dimension(300,600));
+		console.setEditable(false);
 //		console.setRows(20);
 //		console.setColumns(35);
-		add(console);
+		//add(console);
 		
 		JScrollPane scroll = new JScrollPane (console, 
 				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroll.setWheelScrollingEnabled(true);
 		add(scroll);
 	}
 	
