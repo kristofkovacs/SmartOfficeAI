@@ -17,10 +17,15 @@
 
 +!run <- .print("System error: can't read data from the current states"); !!end.
 
-+!end : (hightemperature_1 & hassmoke_1) <- .send(ba,tell,firealert_1); .wait(5000);  !!start.
-+!end : (hightemperature_2 & hassmoke_2) <- .send(ba,tell,firealert_2); .wait(5000);  !!start.
-+!end : (hightemperature_3 & hassmoke_3) <- .send(ba,tell,firealert_3); .wait(5000);  !!start.
-+!end : (hightemperature_4 & hassmoke_4) <- .send(ba,tell,firealert_4); .wait(5000);  !!start.
++!end : (hightemperature_1 & hassmoke_1) <- .send(master,tell,firealert_1); .wait(5000);  !!start.
++!end : (hightemperature_2 & hassmoke_2) <- .send(master,tell,firealert_2); .wait(5000);  !!start.
++!end : (hightemperature_3 & hassmoke_3) <- .send(master,tell,firealert_3); .wait(5000);  !!start.
++!end : (hightemperature_4 & hassmoke_4) <- .send(master,tell,firealert_4); .wait(5000);  !!start.
+
++!end  <- .send(master,untell,firealert_1); .wait(10000); !!start.
++!end  <- .send(master,untell,firealert_2); .wait(10000); !!start.
++!end  <- .send(master,untell,firealert_3); .wait(10000); !!start.
++!end  <- .send(master,untell,firealert_4); .wait(10000); !!start.
 
 //first serverRoom
 +!checkTemperature_1(N) : N > 45 <- +hightemperature_1; print("High temperature in the first server room").

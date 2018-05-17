@@ -17,10 +17,10 @@
 
 +!run <- .print("System error: can't read data from the current states"); !!end.
 
-+!end : (alarmOn_1 & movementDetected_1 & not checkAlarmPin_1) <- .send(ba,tell,intrude_1); .wait(30000);  !!start.
-+!end : (alarmOn_2 & movementDetected_2 & not checkAlarmPin_2) <- .send(ba,tell,intrude_2); .wait(30000);  !!start.
-+!end : (alarmOn_3 & movementDetected_3 & not checkAlarmPin_3) <- .send(ba,tell,intrude_3); .wait(30000);  !!start.
-+!end : (alarmOn_4 & movementDetected_4 & not checkAlarmPin_4) <- .send(ba,tell,intrude_4); .wait(30000);  !!start.
++!end : (alarmOn_1 & movementDetected_1 & not checkAlarmPin_1) <- .send(master,tell,intrude_1); .wait(30000);  !!start.
++!end : (alarmOn_2 & movementDetected_2 & not checkAlarmPin_2) <- .send(master,tell,intrude_2); .wait(30000);  !!start.
++!end : (alarmOn_3 & movementDetected_3 & not checkAlarmPin_3) <- .send(master,tell,intrude_3); .wait(30000);  !!start.
++!end : (alarmOn_4 & movementDetected_4 & not checkAlarmPin_4) <- .send(master,tell,intrude_4); .wait(30000);  !!start.
 
 //first serverRoom
 +!checkAlarm_1(N) : N == true <- +alarmOn_1; print("The alarm is turned on in the first server room").
