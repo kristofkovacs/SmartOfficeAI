@@ -32,6 +32,7 @@ public class GUI implements ActionListener {
 	// Szenzor adatok küldése gomb eseménykezelő
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		log("Szenzor adatok kuldese...");
 		environment.updateSensorStates(window.getRoomControls());
 	}
 

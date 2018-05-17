@@ -100,7 +100,7 @@ public class RoomControlPanel extends JPanel implements RoomControl {
 	}
 
 	public String getAlarmTextInputValue() {
-		return " " + alarmTextInput.getText();
+		return "\"" + alarmTextInput.getText() + "\"";
 	}
 
 	public boolean isThereSmoke() {
