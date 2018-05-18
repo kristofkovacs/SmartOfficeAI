@@ -89,49 +89,64 @@ public class Env extends Environment {
 		
 		List<AgentInfo> outputs = gui.getAgentOutputs();
 		
+		AgentInfo output_0 = outputs.get(0);
+		
+		int roomNum = 0;
+		boolean isActive = false;
+		
 		switch (action.getFunctor()) {
 			case  "print": 
 				gui.log(agName, action.getTerm(0).toString());
 				break;
 			case  "callPolice": 
-				for(AgentInfo output : outputs){//egyenlore mindenhova kiirjuk
-					output.callPolice(Boolean.parseBoolean(action.getTerm(0).toString()));
-				}
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				isActive = Boolean.parseBoolean(action.getTerm(1).toString());
+				
+				outputs.get(roomNum).callPolice(isActive);				
 				break;
 			case  "callFireFighters": 
-				for(AgentInfo output : outputs){//egyenlore mindenhova kiirjuk
-					output.callFireFighers(Boolean.parseBoolean(action.getTerm(0).toString()));
-				}
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				isActive = Boolean.parseBoolean(action.getTerm(1).toString());
+				
+				outputs.get(roomNum).callFireFighers(isActive);	
 				break;
-			//case  "emEle": gui.emergencyElevator(Boolean.parseBoolean(action.getTerm(0).toString()));
-			//				break;
 			case  "emExit": 
-				for(AgentInfo output : outputs){//egyenlore mindenhova kiirjuk
-					if("close".equals(action.getTerm(0).toString()))
-						output.closeDoors();
-					else
-						output.openDoors();
-				}
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				
+					if("close".equals(action.getTerm(1).toString()))
+						outputs.get(roomNum).closeDoors();
+					if("open".equals(action.getTerm(1).toString()))
+						outputs.get(roomNum).openDoors();
 				break;
 			case  "emSpk": 
-				for(AgentInfo output : outputs){//egyenlore mindenhova kiirjuk
-					output.setAlarm(action.getTerm(0).toString());
-				}
-				break;	
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+
+				outputs.get(roomNum).setAlarm(action.getTerm(1).toString());	
+				break;				
 			case  "emDataSave": 
-				for(AgentInfo output : outputs){//egyenlore mindenhova kiirjuk
-					output.sendBackupData();
-				}
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				
+				if("start".equals(action.getTerm(1).toString()))
+					outputs.get(roomNum).sendBackupData();
+				
+				if ("stop".equals(action.getTerm(1).toString()))
+					outputs.get(roomNum).stopBackup();
+				
 				break;		
-			case  "emServers": 
-				for(AgentInfo output : outputs){//egyenlore mindenhova kiirjuk
-					output.stopBackup();
-				}
-				break;		
+			case  "stopServers": 
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				
+				outputs.get(roomNum).stopServers();		
+				break;	
+			case  "startServers": 
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				
+				outputs.get(roomNum).startServers();
+				break;					
 			case "startAlarmCounter_1":
 				if(alarmTimer1 != null)
 					alarmTimer1.stopCounter();
-				alarmTimer1 = new AlarmTimerThread(outputs.get(0));
+				alarmTimer1 = new AlarmTimerThread(output_0);
 				
 				(new Thread(alarmTimer1)).start();				
 				break;		
@@ -141,6 +156,13 @@ public class Env extends Environment {
 				
 				alarmTimer1.stopCounter();				
 				break;
+			case "activateAlarm_1":
+				output_0.activateAlarm();
+				break;
+			case "deactivateAlarm_1":
+				output_0.deactivateAlarm();
+				break;
+				
 			default: gui.log("executing: "+action+", but not implemented!");
 					 break;
 		}

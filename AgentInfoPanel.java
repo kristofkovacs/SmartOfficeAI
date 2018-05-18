@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 public class AgentInfoPanel extends JPanel implements AgentInfo {
 	private static final String defaultEmergencyMessage = "Nincs ertesites";
 	
-	private static final String defaultAlarmMessage = "Nincs riasztas";
+	private static final String defaultAlarmMessage = " ";
 	private static final String alarmTurnedOn = "Elesitve";
 	private static final String alarmTurnedOff = "Kikapcsolva";
 	private static final int defaultAlarmCounterValue = 30;
@@ -18,7 +18,8 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 	private static final String defaultBackupMessage = "Nincs folyamatban";
 	private static final String inProgressMessage = "Folyamatban...";
 	private static final String sendingDataMessage = "Adatok kuldese...";
-	private static final String receivingDataMessage = "Adatok fogadasa...";
+	private static final String serversTurnedOn = "Futnak";
+	private static final String serversTurnedOff = "Kikapcsolva";
 	
 	private static final String doorsOpenedMessage = "Nyitva";
 	private static final String doorsClosedMessage = "Zarva";
@@ -30,18 +31,16 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 	private JTextField alarmStateTF;
 	private JTextField alarmCounterTF;
 	private JTextField alarmMessageTF;
-	private JTextField backupTF;
+	private JTextField serversState;
 	private JTextField DoorsTF;
 	
 	public AgentInfoPanel(int roomNumber) {
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		final String panelTitle = GUI.roomControlSubPanelTitle + " " + roomNumber;
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), panelTitle, TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
-		
-//		setPreferredSize(new Dimension(100, 50));
+
 		
 		fireFightersTF = new JTextField();
 		createSubPanelWithLabel("Tuzoltok ertesitese", fireFightersTF, defaultEmergencyMessage, 10);
@@ -49,8 +48,8 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 		PoliceTF = new JTextField();
 		createSubPanelWithLabel("Rendorseg ertesitese", PoliceTF, defaultEmergencyMessage, 10);
 		
-		backupTF = new JTextField();
-		createSubPanelWithLabel("Biztonsagi mentes", backupTF, defaultBackupMessage, 10);
+		serversState = new JTextField();
+		createSubPanelWithLabel("Szerverek allapota", serversState, serversTurnedOn, 10);
 		
 		DoorsTF = new JTextField();
 		createSubPanelWithLabel("Ajtok allapota", DoorsTF, doorsOpenedMessage, 10);
@@ -89,10 +88,11 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 		return alarmCounter == 0;
 	}
 	
-	public void activateAlarm() {
+	public void resetAlarmCounter(){
 		alarmCounter = defaultAlarmCounterValue;
-		alarmCounterTF.setText(String.valueOf(alarmCounter));
-		
+	}
+	
+	public void activateAlarm() {		
 		alarmStateTF.setText(alarmTurnedOn);
 	}
 	
@@ -133,21 +133,26 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 	}
 
 	public void sendBackupData() {
-		backupTF.setText(sendingDataMessage);
-	}
-	
-	public void receiveBackupData() {
-		backupTF.setText(receivingDataMessage);
+		serversState.setText(sendingDataMessage);
 	}
 	
 	public void stopBackup() {
-		backupTF.setText(defaultBackupMessage);
+		serversState.setText(defaultBackupMessage);
+	}
+	
+	public void startServers(){
+		serversState.setText(serversTurnedOn);
+	}
+
+	public void stopServers(){
+		serversState.setText(serversTurnedOff);
 	}
 
 }
 
 interface AgentInfo {
 	public void decreaseAlarmTimer();	
+	public void resetAlarmCounter();
 	public boolean isAlarmCounterReachedZero();	
 	public void activateAlarm();
 	public void deactivateAlarm();
@@ -160,6 +165,7 @@ interface AgentInfo {
 	public void openDoors();
 
 	public void sendBackupData();	
-	public void receiveBackupData();
 	public void stopBackup();
+	public void startServers();
+	public void stopServers();
 }
