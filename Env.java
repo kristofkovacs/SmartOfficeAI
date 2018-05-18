@@ -31,28 +31,31 @@ public class Env extends Environment {
 	}
 	
 	public void updateSensorStates(List<RoomControl> roomControls){
-		RoomControl room1 = roomControls.get(0);
-		RoomControl room2 = roomControls.get(1);
-		RoomControl room3 = roomControls.get(2);
-		RoomControl room4 = roomControls.get(3);
+		RoomControl room0 = roomControls.get(0);
+		RoomControl room1 = roomControls.get(1);
+		RoomControl room2 = roomControls.get(2);
+		RoomControl room3 = roomControls.get(3);
 		
 		try{
 			clearPercepts("safety");
 				addPercept("safety", 
 					ASSyntax.createLiteral("refresh",
+						ASSyntax.parseTerm(String.valueOf(room0.getTemperatureSensorValue())),
+						ASSyntax.parseTerm(String.valueOf(room0.isThereSmoke())),
 						ASSyntax.parseTerm(String.valueOf(room1.getTemperatureSensorValue())),
 						ASSyntax.parseTerm(String.valueOf(room1.isThereSmoke())),
 						ASSyntax.parseTerm(String.valueOf(room2.getTemperatureSensorValue())),
 						ASSyntax.parseTerm(String.valueOf(room2.isThereSmoke())),
 						ASSyntax.parseTerm(String.valueOf(room3.getTemperatureSensorValue())),
-						ASSyntax.parseTerm(String.valueOf(room3.isThereSmoke())),
-						ASSyntax.parseTerm(String.valueOf(room4.getTemperatureSensorValue())),
-						ASSyntax.parseTerm(String.valueOf(room4.isThereSmoke()))
+						ASSyntax.parseTerm(String.valueOf(room3.isThereSmoke()))
 						));
 						
 			clearPercepts("security");
 				addPercept("security", 
 					ASSyntax.createLiteral("refresh",
+						ASSyntax.parseTerm(String.valueOf(room0.isAlarmed())),
+						ASSyntax.parseTerm(String.valueOf(room0.isThereMotion())),
+						ASSyntax.parseTerm(room0.getAlarmTextInputValue()),
 						ASSyntax.parseTerm(String.valueOf(room1.isAlarmed())),
 						ASSyntax.parseTerm(String.valueOf(room1.isThereMotion())),
 						ASSyntax.parseTerm(room1.getAlarmTextInputValue()),
@@ -61,10 +64,7 @@ public class Env extends Environment {
 						ASSyntax.parseTerm(room2.getAlarmTextInputValue()),
 						ASSyntax.parseTerm(String.valueOf(room3.isAlarmed())),
 						ASSyntax.parseTerm(String.valueOf(room3.isThereMotion())),
-						ASSyntax.parseTerm(room3.getAlarmTextInputValue()),
-						ASSyntax.parseTerm(String.valueOf(room4.isAlarmed())),
-						ASSyntax.parseTerm(String.valueOf(room4.isThereMotion())),
-						ASSyntax.parseTerm(room4.getAlarmTextInputValue())					
+						ASSyntax.parseTerm(room3.getAlarmTextInputValue())					
 						));				
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -91,7 +91,7 @@ public class Env extends Environment {
 		
 		AgentInfo output_0 = outputs.get(0);
 		
-		int roomNum = 0;
+		int roomNum = -1;
 		boolean isActive = false;
 		
 		switch (action.getFunctor()) {
