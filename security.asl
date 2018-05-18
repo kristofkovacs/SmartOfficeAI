@@ -17,6 +17,10 @@
 
 +!run <- .print("System error: can't read data from the current states"); !!end.
 
++!end : (alarmOn_1 & movementDetected_1 & not correctPin_1) <- startAlarmCounter_1(); .wait(30000); stopAlarmCounter_1(); +alarmReachedZero_1; !!start.
++!end : (alarmOn_1 & movementDetected_1 & not correctPin_1 & alarmReachedZero_1) <- .send(master, tell, intrude_1); !!start.
+
+
 +!end : (alarmOn_1 & movementDetected_1 & not checkAlarmPin_1) <- .send(master,tell,intrude_1); .wait(30000);  !!start.
 +!end : (alarmOn_2 & movementDetected_2 & not checkAlarmPin_2) <- .send(master,tell,intrude_2); .wait(30000);  !!start.
 +!end : (alarmOn_3 & movementDetected_3 & not checkAlarmPin_3) <- .send(master,tell,intrude_3); .wait(30000);  !!start.

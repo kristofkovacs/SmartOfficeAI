@@ -17,8 +17,9 @@
 			callFireFighters(false);
 			emServers(start);
 			emExit(manual);
-			emSpk(" ").		
-
+			emSpk(" ").						
+					
+			
 /* Plans */
 
 +firealert_1[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against fire and smoke in first server room"); +catastrophe; !run.

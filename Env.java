@@ -18,6 +18,12 @@ import java.util.List;
 public class Env extends Environment {
 	
     private GUI gui;
+	
+	private AlarmTimerThread alarmTimer1;
+	private AlarmTimerThread alarmTimer2;
+	private AlarmTimerThread alarmTimer3;
+	private AlarmTimerThread alarmTimer4;
+	
 
 	
 	public void log(String message){
@@ -59,7 +65,7 @@ public class Env extends Environment {
 						ASSyntax.parseTerm(String.valueOf(room4.isAlarmed())),
 						ASSyntax.parseTerm(String.valueOf(room4.isThereMotion())),
 						ASSyntax.parseTerm(room4.getAlarmTextInputValue())					
-						));												
+						));				
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,6 +128,19 @@ public class Env extends Environment {
 					output.stopBackup();
 				}
 				break;		
+			case "startAlarmCounter_1":
+				if(alarmTimer1 != null)
+					alarmTimer1.stopCounter();
+				alarmTimer1 = new AlarmTimerThread(outputs.get(0));
+				
+				(new Thread(alarmTimer1)).start();				
+				break;		
+			case "stopAlarmCounter_1":
+				if(alarmTimer1 == null)
+					break;
+				
+				alarmTimer1.stopCounter();				
+				break;
 			default: gui.log("executing: "+action+", but not implemented!");
 					 break;
 		}
