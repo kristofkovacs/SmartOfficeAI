@@ -7,8 +7,10 @@ MAS ierHF {
     environment: Env
 
     agents:
-		safety;
-        security;
+		safety_0;
+		safety_1;
+		safety_2;
+		safety_3;
 		master;
 		
 }
