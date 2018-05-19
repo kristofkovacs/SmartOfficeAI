@@ -8,8 +8,8 @@
 //state reading
 +!start <-  !!run.
 
-+!run : refresh(A,B,C,D,E,F,G,H) <- print("-----Reading states-----"); 
-!checkTemperature(E); !checkSmoke(F);
++!run : refresh(A,B) <- print("-----Reading states-----"); 
+!checkTemperature(A); !checkSmoke(B);
 !!end.
 
 +!run <- print("System error: can't read data from the current states"); !!end.

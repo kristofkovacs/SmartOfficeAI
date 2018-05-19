@@ -8,7 +8,7 @@
 //state reading
 +!start <-  !!run.
 
-+!run : refresh(A,B,C,D,E,F,G,H) <- print("-----Reading states-----"); 
++!run : refresh(A,B) <- print("-----Reading states-----"); 
 !checkTemperature(A); !checkSmoke(B);
 !!end.
 

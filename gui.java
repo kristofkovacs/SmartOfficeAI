@@ -9,10 +9,10 @@ import java.util.List;
 
 public class GUI implements ActionListener {
 	public static final String windowTitle = "Intelligens Elosztott Rendszerek - 2018";
-	public static final String roomControlPanelTitle = "Szerverszoba szenzor kezelopanel";
-	public static final String roomControlSubPanelTitle = "Szerverszoba ";
-	public static final String infoPanelTitle = "Rendszer informaciok";
-	public static final String consolePanelTitle = "Rendszer konzol";
+	public static final String roomControlPanelTitle = "Server room control panel";
+	public static final String roomControlSubPanelTitle = "Server room ";
+	public static final String infoPanelTitle = "System information";
+	public static final String consolePanelTitle = "System Console";
 	public static final int numberOfAgents = 4;
 
 	Window window;
@@ -28,16 +28,19 @@ public class GUI implements ActionListener {
 	public GUI(){
 		window = new Window(this);
 	}
+	
+	public void refreshSensorStates(){
+		actionPerformed(null);
+	}
 
 	// Szenzor adatok küldése gomb eseménykezelő
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		log("Szenzor adatok kuldese...");
 		environment.updateSensorStates(window.getRoomControls());
 	}
 
 	public void log(String str) {
-		String timeStamp = new SimpleDateFormat("HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
+		String timeStamp = new SimpleDateFormat("HH:mm:ss.S").format(Calendar.getInstance().getTime());
 
 		String logStr = " [ " + timeStamp.toString() + " ] " + str;
 		window.log(logStr);

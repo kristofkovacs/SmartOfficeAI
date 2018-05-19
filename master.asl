@@ -6,129 +6,173 @@
 
 /* Initial goals */
 
-//+!run : catastrophe & intrude_0 <- callPolice(0, true);emExit(0, close).
-		
-+!run : catastrophe_0 & firealert_0 <- print("-----Reading states-----"); 
-		print("Starting protocol against fire and smoke in first server room");
-		callFireFighters(0, true);
-		print("Adatok mentese a biztonsagi szerverekre...");
-		emDataSave(0, start);
-		print("Veszkijaratok kinyitasa...");
-		emExit(0, open);
-		print("Veszkijaratok kinyitva.");
-		emSpk(0, "There is fire in the building! Please follow the exit instructions.");
-		.wait(2500); //2,5 mp az adatmentesre eleg lesz
-		emDataSave(0, stop);
-		print("Adatok mentese befejezodott.");
-		print("Szerverek leallitasa...");
-		stopServers(0);
-		print("Szerverek leallitasa megtortent.").		
-
--catastrophe_0 <- print("Veszhelyzet elharitva.");
-	callPolice(0, false);
-	callFireFighters(0, false);
-	emSpk(0," ");
-	emExit(0, open);
-	print("Szerverek inditasa...");
-	.wait(2000);			
-	startServers(0);
-	print("Szerverek elinditva.").		
-		
-		
-	
-+!run : catastrophe_1 & firealert_1 <- print("-----Reading states-----"); 
-		print("Starting protocol against fire and smoke in second server room");
-		callFireFighters(1, true);
-		print("Adatok mentese a biztonsagi szerverekre...");
-		emDataSave(1, start);
-		print("Veszkijaratok kinyitasa...");
-		emExit(1, open);
-		print("Veszkijaratok kinyitva.");
-		emSpk(1, "There is fire in the building! Please follow the exit instructions.");
-		.wait(2500); //2,5 mp az adatmentesre eleg lesz
-		emDataSave(1, stop);
-		print("Adatok mentese befejezodott.");
-		print("Szerverek leallitasa...");
-		stopServers(1);
-		print("Szerverek leallitasa megtortent.").
-			
--catastrophe_1 <- print("Veszhelyzet elharitva.");
-	callPolice(1, false);
-	callFireFighters(1, false);
-	emSpk(1," ");
-	emExit(1, open);
-	print("Szerverek inditasa...");
-	.wait(2000);			
-	startServers(1);
-	print("Szerverek elinditva.").
 			
 /* Plans */
 
 //elso szerverszoba tuz eseten
-+firealert_0[source(A)] <- +catastrophe_0; !run.		
--firealert_0[source(A)] <- -catastrophe_0; !run.
++firealert_0[source(A)]: true <- print("-----Reading states-----"); 
+		print("Starting protocol against fire and smoke in first server room");
+		callFireFighters(0, "In progress...");		
+		print("Saving data to the cloud...");
+		emDataSave(0, start);
+		print("Opening emergency exits...");
+		emExit(0, open);
+		print("Emergency exits are opened.");
+		emSpk(0, "There is fire in the building! Please follow the exit instructions.");
+		.wait(2500); //2,5 mp az adatmentesre eleg lesz
+		callFireFighters(0, "Firefighters on their way!");	
+		emDataSave(0, stop);
+		print("Data saving has been finished.");
+		print("Shutting down the servers...");
+		stopServers(0);
+		.wait(1000);
+		print("Successful server shutdown.").
+		
+-firealert_0[source(A)]: true <- print("Emergency protocols successful.");
+	callFireFighters(0, "");
+	emSpk(0," ");
+	emExit(0, open);
+	print("Restarting the servers...");
+	.wait(2000);			
+	startServers(0);
+	print("Servers are up and running.").
 	
 //masodik szerverszoba tuz eseten
-+firealert_1[source(A)] <- +catastrophe_1; !run.		
--firealert_1[source(A)] <- -catastrophe_1; !run.
++firealert_1[source(A)]: true <- print("-----Reading states-----"); 
+		print("Starting protocol against fire and smoke in second server room");
+		callFireFighters(1, "In progress...");		
+		print("Saving data to the cloud...");
+		emDataSave(1, start);
+		print("Opening emergency exits...");
+		emExit(1, open);
+		print("Emergency exits are opened.");
+		emSpk(1, "There is fire in the building! Please follow the exit instructions.");
+		.wait(2500); //2,5 mp az adatmentesre eleg lesz
+		callFireFighters(1, "Firefighters on their way!");	
+		emDataSave(1, stop);
+		print("Data saving has been finished.");
+		print("Shutting down the servers...");
+		stopServers(1);
+		.wait(1000);
+		print("Successful server shutdown.").
+		
+-firealert_1[source(A)]: true <- print("Emergency protocols successful.");
+	callFireFighters(1, "");
+	emSpk(1," ");
+	emExit(1, open);
+	print("Restarting the servers...");
+	.wait(2000);			
+	startServers(1);
+	print("Servers are up and running.").
 	
 //harmadik szerverszoba tuz eseten
 +firealert_2[source(A)]: true <- print("-----Reading states-----"); 
-		print("Starting protocol against fire and smoke in second server room");
-		callFireFighters(2, true);
-		print("Adatok mentese a biztonsagi szerverekre...");
+		print("Starting protocol against fire and smoke in third server room");
+		callFireFighters(2, "In progress...");		
+		print("Saving data to the cloud...");
 		emDataSave(2, start);
-		print("Veszkijaratok kinyitasa...");
+		print("Opening emergency exits...");
 		emExit(2, open);
-		print("Veszkijaratok kinyitva.");
+		print("Emergency exits are opened.");
 		emSpk(2, "There is fire in the building! Please follow the exit instructions.");
 		.wait(2500); //2,5 mp az adatmentesre eleg lesz
+		callFireFighters(2, "Firefighters on their way!");	
 		emDataSave(2, stop);
-		print("Adatok mentese befejezodott.");
-		print("Szerverek leallitasa...");
+		print("Data saving has been finished.");
+		print("Shutting down the servers...");
 		stopServers(2);
-		print("Szerverek leallitasa megtortent.").
+		.wait(1000);
+		print("Successful server shutdown.").
 		
--firealert_2[source(A)]: true <- print("Veszhelyzet elharitva.");
-	callPolice(2, false);
-	callFireFighters(2, false);
+-firealert_2[source(A)]: true <- print("Emergency protocols successful.");
+	callFireFighters(2, "");
 	emSpk(2," ");
 	emExit(2, open);
-	print("Szerverek inditasa...");
+	print("Restarting the servers...");
 	.wait(2000);			
 	startServers(2);
-	print("Szerverek elinditva.").
+	print("Servers are up and running.").
 	
 //negyedik szerverszoba tuz eseten
 +firealert_3[source(A)]: true <- print("-----Reading states-----"); 
-		print("Starting protocol against fire and smoke in second server room");
-		callFireFighters(3, true);
-		print("Adatok mentese a biztonsagi szerverekre...");
+		print("Starting protocol against fire and smoke in fourth server room");
+		callFireFighters(3, "In progress...");		
+		print("Saving data to the cloud...");
 		emDataSave(3, start);
-		print("Veszkijaratok kinyitasa...");
+		print("Opening emergency exits...");
 		emExit(3, open);
-		print("Veszkijaratok kinyitva.");
+		print("Emergency exits are opened.");
 		emSpk(3, "There is fire in the building! Please follow the exit instructions.");
 		.wait(2500); //2,5 mp az adatmentesre eleg lesz
+		callFireFighters(3, "Firefighters on their way!");	
 		emDataSave(3, stop);
-		print("Adatok mentese befejezodott.");
-		print("Szerverek leallitasa...");
+		print("Data saving has been finished.");
+		print("Shutting down the servers...");
 		stopServers(3);
-		print("Szerverek leallitasa megtortent.").
+		.wait(1000);
+		print("Successful server shutdown.").
 		
--firealert_3[source(A)]: true <- print("Veszhelyzet elharitva.");
-	callPolice(3, false);
-	callFireFighters(3, false);
+-firealert_3[source(A)]: true <- print("Emergency protocols successful.");
+	callFireFighters(3, "");
 	emSpk(3," ");
 	emExit(3, open);
-	print("Szerverek inditasa...");
+	print("Restarting the servers...");
 	.wait(2000);			
 	startServers(3);
-	print("Szerverek elinditva.").
-		
+	print("Servers are up and running.").
 
-
-//+intrude_0[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in first server room"); +catastrophe; !run.
-//+intrude_1[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in second server room"); +catastrophe; !run.
-//+intrude_2[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in third server room"); +catastrophe; !run.
-//+intrude_3[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in fourth server room"); +catastrophe; !run.
+//elso szobaban betores
++intrude_0[source(A)]: true <- print("-----Reading states-----"); 
+	print("Starting protocol against intruder in first server room"); 
+	callPolice(0, "In progress...");
+	emExit(0, close);
+	emSpk(0, "!!!Intrude in first server room!!!")
+	.wait(1000);
+	callPolice(0, "Police is on its way!").
+	
+-intrude_0[source(A)]: true <- print("-----Reading states-----"); 
+	callPolice(0, "");
+	emExit(0, open);
+	emSpk(0, " ").
+	
+//masodik szobaban betores
++intrude_1[source(A)]: true <- print("-----Reading states-----"); 
+	print("Starting protocol against intruder in second server room"); 
+	callPolice(1, "In progress...");
+	emExit(1, close);
+	emSpk(1, "!!!Intrude in second server room!!!")
+	.wait(1000);
+	callPolice(1, "Police is on its way!").
+	
+-intrude_1[source(A)]: true <- print("-----Reading states-----"); 
+	callPolice(1, "");
+	emExit(1, open);
+	emSpk(1, " ").
+	
+//harmadik szobaban betores
++intrude_2[source(A)]: true <- print("-----Reading states-----"); 
+	print("Starting protocol against intruder in third server room"); 
+	callPolice(2, "In progress...");
+	emExit(2, close);
+	emSpk(2, "!!!Intrude in third server room!!!")
+	.wait(1000);
+	callPolice(2, "Police is on its way!").
+	
+-intrude_2[source(A)]: true <- print("-----Reading states-----"); 
+	callPolice(2, "");
+	emExit(2, open);
+	emSpk(2, " ").
+	
+//negyedik szobaban betores
++intrude_3[source(A)]: true <- print("-----Reading states-----"); 
+	print("Starting protocol against intruder in fourth server room"); 
+	callPolice(3, "In progress...");
+	emExit(3, close);
+	emSpk(3, "!!!Intrude in fourth server room!!!")
+	.wait(1000);
+	callPolice(3, "Police is on its way!").
+	
+-intrude_3[source(A)]: true <- print("-----Reading states-----"); 
+	callPolice(3, "");
+	emExit(3, open);
+	emSpk(3, " ").

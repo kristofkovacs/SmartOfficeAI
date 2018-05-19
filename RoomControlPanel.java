@@ -13,11 +13,11 @@ import javax.swing.JSpinner;
 
 public class RoomControlPanel extends JPanel implements RoomControl {
 
-	private static final String motionStr = "Mozgas";
-	private static final String smokeStr = "Fust";
-	private static final String alarmStr = "Riaszto kezelopanel";
-	private static final String temperatureStr = "Homerseklet";
-	private static final String alarmedStr = "Riaszto elesites";
+	private static final String motionStr = "Movement";
+	private static final String smokeStr = "Smoke";
+	private static final String alarmStr = "Alarm control panel";
+	private static final String temperatureStr = "Temperature";
+	private static final String alarmedStr = "Activate alarm";
 
 	private static final int spinnerDefaultValue = 24;
 
@@ -43,7 +43,7 @@ public class RoomControlPanel extends JPanel implements RoomControl {
 		this.roomNumber = roomNum;
 
 		setBorder(
-				new TitledBorder(UIManager.getBorder("TitledBorder.border"), GUI.roomControlSubPanelTitle + roomNumber,
+				new TitledBorder(UIManager.getBorder("TitledBorder.border"), GUI.roomControlSubPanelTitle + (roomNumber + 1),
 						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
 		panel1 = new JPanel(subPanelLayout, true);
@@ -99,8 +99,12 @@ public class RoomControlPanel extends JPanel implements RoomControl {
 		return (int) temperatureSpinner.getValue();
 	}
 
-	public String getAlarmTextInputValue() {
-		return "\"" + alarmTextInput.getText() + "\"";
+	public String getAlarmTextInputValue() {		
+		if(alarmTextInput.getText() == null || alarmTextInput.getText().isEmpty()){
+			return "\"\"";
+		}
+			
+		return alarmTextInput.getText();
 	}
 
 	public boolean isThereSmoke() {
@@ -113,6 +117,10 @@ public class RoomControlPanel extends JPanel implements RoomControl {
 
 	public boolean isAlarmed() {
 		return alarmedCB.isSelected();
+	}
+	
+	public void deactivateAlarm(){
+		alarmedCB.setSelected(false);
 	}
 }
 
@@ -128,4 +136,5 @@ interface RoomControl {
 	public boolean isThereMotion();
 
 	public boolean isAlarmed();
+	public void deactivateAlarm();
 }

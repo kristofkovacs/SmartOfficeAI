@@ -15,10 +15,9 @@ public class Window extends JFrame {
 		super();
 		setTitle(GUI.windowTitle);
 		setResizable(true);
-		setBounds(20, 20, 1250, 700);
+		setBounds(10, 10, 1300, 700);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-//		setLayout(new FlowLayout());
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 		
 		roomControlMainPanel = new RoomControlMainPanel(gui);
@@ -30,17 +29,13 @@ public class Window extends JFrame {
 		add(roomControlMainPanel);
 		add(consolePanel);
 		add(agentInfoMainPanel);
-		
-//		JScrollPane scroll = new JScrollPane (agentInfoMainPanel, 
-//				   JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//		add(scroll);
+	
 		
 		setVisible(true);
 	}
 
 	public void log(String str) {
 		consolePanel.log(str);
-		
 	}
 
 	public List<RoomControl> getRoomControls() {

@@ -20,7 +20,7 @@ public class AgentInfoMainPanel extends JPanel{
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), GUI.infoPanelTitle, TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
-		setPreferredSize(new Dimension(600, 600));
+		setPreferredSize(new Dimension(480, 450));
 		
 		agentInfoPanels = new ArrayList<>(GUI.numberOfAgents);
 		

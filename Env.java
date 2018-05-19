@@ -14,17 +14,13 @@ import jason.asSyntax.Term;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Env extends Environment {
 	
     private GUI gui;
 	
-	private AlarmTimerThread alarmTimer1;
-	private AlarmTimerThread alarmTimer2;
-	private AlarmTimerThread alarmTimer3;
-	private AlarmTimerThread alarmTimer4;
-	
-
+	private List<AlarmTimerThread> timers;
 	
 	public void log(String message){
 		gui.log(message);
@@ -37,35 +33,25 @@ public class Env extends Environment {
 		RoomControl room3 = roomControls.get(3);
 		
 		try{
-			clearPercepts("safety");
-				addPercept("safety", 
+			for(int i = 0;i < GUI.numberOfAgents;i++){
+				String safetyAgentName = "safety_" + i;
+				String securityAgentName = "security_" + i;
+				
+				clearPercepts(safetyAgentName);
+				addPercept(safetyAgentName, 
 					ASSyntax.createLiteral("refresh",
-						ASSyntax.parseTerm(String.valueOf(room0.getTemperatureSensorValue())),
-						ASSyntax.parseTerm(String.valueOf(room0.isThereSmoke())),
-						ASSyntax.parseTerm(String.valueOf(room1.getTemperatureSensorValue())),
-						ASSyntax.parseTerm(String.valueOf(room1.isThereSmoke())),
-						ASSyntax.parseTerm(String.valueOf(room2.getTemperatureSensorValue())),
-						ASSyntax.parseTerm(String.valueOf(room2.isThereSmoke())),
-						ASSyntax.parseTerm(String.valueOf(room3.getTemperatureSensorValue())),
-						ASSyntax.parseTerm(String.valueOf(room3.isThereSmoke()))
+						ASSyntax.parseTerm(String.valueOf(roomControls.get(i).getTemperatureSensorValue())),
+						ASSyntax.parseTerm(String.valueOf(roomControls.get(i).isThereSmoke()))
 						));
-						
-			clearPercepts("security");
-				addPercept("security", 
+				
+				clearPercepts(securityAgentName);
+				addPercept(securityAgentName, 
 					ASSyntax.createLiteral("refresh",
-						ASSyntax.parseTerm(String.valueOf(room0.isAlarmed())),
-						ASSyntax.parseTerm(String.valueOf(room0.isThereMotion())),
-						ASSyntax.parseTerm(room0.getAlarmTextInputValue()),
-						ASSyntax.parseTerm(String.valueOf(room1.isAlarmed())),
-						ASSyntax.parseTerm(String.valueOf(room1.isThereMotion())),
-						ASSyntax.parseTerm(room1.getAlarmTextInputValue()),
-						ASSyntax.parseTerm(String.valueOf(room2.isAlarmed())),
-						ASSyntax.parseTerm(String.valueOf(room2.isThereMotion())),
-						ASSyntax.parseTerm(room2.getAlarmTextInputValue()),
-						ASSyntax.parseTerm(String.valueOf(room3.isAlarmed())),
-						ASSyntax.parseTerm(String.valueOf(room3.isThereMotion())),
-						ASSyntax.parseTerm(room3.getAlarmTextInputValue())					
-						));				
+						ASSyntax.parseTerm(String.valueOf(roomControls.get(i).isAlarmed())),
+						ASSyntax.parseTerm(String.valueOf(roomControls.get(i).isThereMotion())),
+						ASSyntax.parseTerm(roomControls.get(i).getAlarmTextInputValue())		
+						));	
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,18 +67,25 @@ public class Env extends Environment {
 		
 		 gui = new GUI(this);
 		 
-		 gui.actionPerformed(null);//init sensor values
+		 gui.refreshSensorStates();//init sensor values
+		 
+		 timers = new ArrayList<>();
+		 
+		 for(int i = 0; i < 4; i++){
+			 timers.add(new AlarmTimerThread(gui.getAgentOutputs().get(i)));
+		 }
     }
 
     @Override
     public boolean executeAction(String agName, Structure action) {
+		List<RoomControl> inputs = gui.getRoomControls();
 		
 		List<AgentInfo> outputs = gui.getAgentOutputs();
 		
 		AgentInfo output_0 = outputs.get(0);
 		
 		int roomNum = -1;
-		boolean isActive = false;
+		String msg = null;
 		
 		switch (action.getFunctor()) {
 			case  "print": 
@@ -100,15 +93,15 @@ public class Env extends Environment {
 				break;
 			case  "callPolice": 
 				roomNum = Integer.parseInt(action.getTerm(0).toString());
-				isActive = Boolean.parseBoolean(action.getTerm(1).toString());
+				msg = action.getTerm(1).toString();
 				
-				outputs.get(roomNum).callPolice(isActive);				
+				outputs.get(roomNum).callPolice(msg);				
 				break;
 			case  "callFireFighters": 
 				roomNum = Integer.parseInt(action.getTerm(0).toString());
-				isActive = Boolean.parseBoolean(action.getTerm(1).toString());
+				msg = action.getTerm(1).toString();
 				
-				outputs.get(roomNum).callFireFighers(isActive);	
+				outputs.get(roomNum).callFireFighers(msg);	
 				break;
 			case  "emExit": 
 				roomNum = Integer.parseInt(action.getTerm(0).toString());
@@ -145,24 +138,35 @@ public class Env extends Environment {
 				break;			
 
 //TODO innen majd nezd at, security agenshez tartozoak jonnek:
-			case "startAlarmCounter_1":
-				if(alarmTimer1 != null)
-					alarmTimer1.stopCounter();
-				alarmTimer1 = new AlarmTimerThread(output_0);
+			case "resetAlarmCounter":
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
 				
-				(new Thread(alarmTimer1)).start();				
-				break;		
-			case "stopAlarmCounter_1":
-				if(alarmTimer1 == null)
-					break;
+				outputs.get(roomNum).resetAlarmCounter();			
+				break;
+			case "startAlarmCounter":
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
 				
-				alarmTimer1.stopCounter();				
+				AlarmTimerThread timer = timers.get(roomNum);
+				
+				(new Thread(timer)).start();				
+				break;				
+			case "stopAlarmCounter":
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				
+				timers.get(roomNum).stopCounter();						
 				break;
-			case "activateAlarm_1":
-				output_0.activateAlarm();
+			case "activateAlarm":
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				
+				outputs.get(roomNum).activateAlarm();
 				break;
-			case "deactivateAlarm_1":
-				output_0.deactivateAlarm();
+			case "deactivateAlarm":
+				roomNum = Integer.parseInt(action.getTerm(0).toString());
+				
+				inputs.get(roomNum).deactivateAlarm();
+				gui.refreshSensorStates();
+				
+				outputs.get(roomNum).deactivateAlarm();
 				break;
 				
 			default: gui.log("executing: "+action+", but not implemented!");

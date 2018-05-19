@@ -10,9 +10,14 @@ public class AlarmTimerThread implements Runnable{
 	
 	@Override
 	public void run(){
-		while(!stopped && !infopanel.isAlarmCounterReachedZero()){
-			try{Thread.sleep(1000);}catch(Exception e){}
+		stopped = false;
+		
+		try{Thread.sleep(1000);}catch(Exception e){}
+		
+		while(!stopped && !infopanel.isAlarmCounterReachedZero()){			
 			infopanel.decreaseAlarmTimer();		
+			
+			try{Thread.sleep(1000);}catch(Exception e){}
 		}	
 	}
 	

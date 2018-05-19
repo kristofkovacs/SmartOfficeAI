@@ -6,13 +6,17 @@ MAS ierHF {
 
     environment: Env
 
-    agents:
+    agents:	
 		safety_0;
 		safety_1;
 		safety_2;
 		safety_3;
+		security_0;
+		security_1;
+		security_2;
+		security_3;
 		master;
-		
+			
 }
 
 

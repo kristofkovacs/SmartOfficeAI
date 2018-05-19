@@ -18,9 +18,9 @@ public class ConsolePanel extends JPanel {
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), GUI.consolePanelTitle,
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
-		setPreferredSize(new Dimension(300, 600));
+		setPreferredSize(new Dimension(400, 600));
 		
-		console = new JTextArea(35, 28);
+		console = new JTextArea(37, 35);
 		//console.setPreferredSize(new Dimension(300,600));
 		console.setEditable(false);
 //		console.setRows(20);
