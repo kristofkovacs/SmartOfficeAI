@@ -23,10 +23,7 @@
 +!end : (hightemperature_2 & hassmoke_2) <- .send(master,tell,firealert_2); .wait(5000);  !!start.
 +!end : (hightemperature_3 & hassmoke_3) <- .send(master,tell,firealert_3); .wait(5000);  !!start.
 
-+!end  <- .send(master,untell,firealert_0); .wait(10000); !!start.
-+!end  <- .send(master,untell,firealert_1); .wait(10000); !!start.
-+!end  <- .send(master,untell,firealert_2); .wait(10000); !!start.
-+!end  <- .send(master,untell,firealert_3); .wait(10000); !!start.
++!end  <- .send(master,untell,firealert_0); .send(master,untell,firealert_1); .send(master,untell,firealert_2); .send(master,untell,firealert_3); .wait(10000); !!start.
 
 //first serverRoom
 +!checkTemperature_0(N) : N > 45 <- +hightemperature_0; print("High temperature in the first server room").

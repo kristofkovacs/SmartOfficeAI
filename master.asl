@@ -128,7 +128,7 @@
 		
 
 
-+intrude_0[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in first server room"); +catastrophe; !run.
-+intrude_1[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in second server room"); +catastrophe; !run.
-+intrude_2[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in third server room"); +catastrophe; !run.
-+intrude_3[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in fourth server room"); +catastrophe; !run.
+//+intrude_0[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in first server room"); +catastrophe; !run.
+//+intrude_1[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in second server room"); +catastrophe; !run.
+//+intrude_2[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in third server room"); +catastrophe; !run.
+//+intrude_3[source(A)]: true <- print("-----Reading states-----"); print("Starting protocol against intruder in fourth server room"); +catastrophe; !run.
