@@ -6,9 +6,9 @@
 
 /* Initial goals */
 
-+!run : catastrophe & intrude_0 <- callPolice(0, true);emExit(0, close).
+//+!run : catastrophe & intrude_0 <- callPolice(0, true);emExit(0, close).
 		
-+!run : catastrophe & firealert_0 <- print("-----Reading states-----"); 
++!run : catastrophe_0 & firealert_0 <- print("-----Reading states-----"); 
 		print("Starting protocol against fire and smoke in first server room");
 		callFireFighters(0, true);
 		print("Adatok mentese a biztonsagi szerverekre...");
@@ -24,7 +24,7 @@
 		stopServers(0);
 		print("Szerverek leallitasa megtortent.").		
 
-+!run : not catastrophe & not firealert_0 <- print("Veszhelyzet elharitva.");
+-catastrophe_0 <- print("Veszhelyzet elharitva.");
 	callPolice(0, false);
 	callFireFighters(0, false);
 	emSpk(0," ");
@@ -36,7 +36,7 @@
 		
 		
 	
-+!run : catastrophe & firealert_1 <- print("-----Reading states-----"); 
++!run : catastrophe_1 & firealert_1 <- print("-----Reading states-----"); 
 		print("Starting protocol against fire and smoke in second server room");
 		callFireFighters(1, true);
 		print("Adatok mentese a biztonsagi szerverekre...");
@@ -50,9 +50,9 @@
 		print("Adatok mentese befejezodott.");
 		print("Szerverek leallitasa...");
 		stopServers(1);
-		print("Szerverek leallitasa megtortent.").		
+		print("Szerverek leallitasa megtortent.").
 			
-+!run : not catastrophe & not firealert_1 <- print("Veszhelyzet elharitva.");
+-catastrophe_1 <- print("Veszhelyzet elharitva.");
 	callPolice(1, false);
 	callFireFighters(1, false);
 	emSpk(1," ");
@@ -60,17 +60,17 @@
 	print("Szerverek inditasa...");
 	.wait(2000);			
 	startServers(1);
-	print("Szerverek elinditva.").				
+	print("Szerverek elinditva.").
 			
 /* Plans */
 
 //elso szerverszoba tuz eseten
-+firealert_0[source(A)]: true <- +catastrophe; !run.		
--firealert_0[source(A)]: true <- -catastrophe; !run.
++firealert_0[source(A)] <- +catastrophe_0; !run.		
+-firealert_0[source(A)] <- -catastrophe_0; !run.
 	
 //masodik szerverszoba tuz eseten
-+firealert_1[source(B)]: true <- +catastrophe; !run.		
--firealert_1[source(B)]: true <- -catastrophe; !run.
++firealert_1[source(A)] <- +catastrophe_1; !run.		
+-firealert_1[source(A)] <- -catastrophe_1; !run.
 	
 //harmadik szerverszoba tuz eseten
 +firealert_2[source(A)]: true <- print("-----Reading states-----"); 

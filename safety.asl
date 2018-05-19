@@ -17,6 +17,7 @@
 
 +!run <- print("System error: can't read data from the current states"); !!end.
 
+
 +!end : (hightemperature_0 & hassmoke_0) <- .send(master,tell,firealert_0); .wait(5000);  !!start.
 +!end : (hightemperature_1 & hassmoke_1) <- .send(master,tell,firealert_1); .wait(5000);  !!start.
 +!end : (hightemperature_2 & hassmoke_2) <- .send(master,tell,firealert_2); .wait(5000);  !!start.

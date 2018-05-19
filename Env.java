@@ -142,7 +142,9 @@ public class Env extends Environment {
 				roomNum = Integer.parseInt(action.getTerm(0).toString());
 				
 				outputs.get(roomNum).startServers();
-				break;					
+				break;			
+
+//TODO innen majd nezd at, security agenshez tartozoak jonnek:
 			case "startAlarmCounter_1":
 				if(alarmTimer1 != null)
 					alarmTimer1.stopCounter();
