@@ -15,7 +15,7 @@ public class Window extends JFrame {
 		super();
 		setTitle(GUI.windowTitle);
 		setResizable(true);
-		setBounds(10, 10, 1300, 700);
+		setBounds(10, 10, 1400, 750);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));

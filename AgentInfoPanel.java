@@ -43,25 +43,25 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 
 		
 		fireFightersTF = new JTextField();
-		createSubPanelWithLabel("Fire department state", fireFightersTF, defaultEmergencyMessage, 10);
+		createSubPanelWithLabel("Firefighters state", fireFightersTF, defaultEmergencyMessage, 10);
 
 		PoliceTF = new JTextField();
 		createSubPanelWithLabel("Police state", PoliceTF, defaultEmergencyMessage, 10);
 		
 		serversState = new JTextField();
-		createSubPanelWithLabel("Servers' state", serversState, serversTurnedOn, 10);
+		createSubPanelWithLabel("Server state", serversState, serversTurnedOn, 10);
 		
 		DoorsTF = new JTextField();
-		createSubPanelWithLabel("Doors' state", DoorsTF, doorsOpenedMessage, 10);
+		createSubPanelWithLabel("Door state", DoorsTF, doorsOpenedMessage, 10);
 		
 		alarmStateTF = new JTextField();
-		createSubPanelWithLabel("Alarm's state", alarmStateTF, alarmTurnedOff, 10);
+		createSubPanelWithLabel("Alarm state", alarmStateTF, alarmTurnedOff, 10);
 		
 		alarmCounterTF = new JTextField();
 		createSubPanelWithLabel("Alarm countdown", alarmCounterTF, String.valueOf(alarmCounter), 10);
 
 		alarmMessageTF = new JTextField();
-		createSubPanelWithLabel("Agent's message", alarmMessageTF, defaultAlarmMessage, 33);
+		createSubPanelWithLabel("Agent message", alarmMessageTF, defaultAlarmMessage, 33);
 		
 	}
 
