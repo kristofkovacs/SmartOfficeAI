@@ -19,9 +19,9 @@
 
 +!end  <- .send(master,untell,firealert_3); .wait(10000); !!start.
 
-//first serverRoom
-+!checkTemperature(N) : N > 45 <- +hightemperature; print("High temperature in the first server room").
-+!checkTemperature(N) : N <= 45 <-  -hightemperature; print("Normal temperature in the first server room").
+//fourth serverRoom
++!checkTemperature(N) : N > 45 <- +hightemperature; print("High temperature in the fourth server room").
++!checkTemperature(N) : N <= 45 <-  -hightemperature; print("Normal temperature in the fourth server room").
 
-+!checkSmoke(N) : N == true <- +hassmoke; print("Smoke detected in the first server room").
-+!checkSmoke(N) : N == false <- -hassmoke; print("Clear air in the first server room").
++!checkSmoke(N) : N == true <- +hassmoke; print("Smoke detected in the fourth server room").
++!checkSmoke(N) : N == false <- -hassmoke; print("Clear air in the fourth server room").
