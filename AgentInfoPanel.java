@@ -8,20 +8,21 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class AgentInfoPanel extends JPanel implements AgentInfo {
-	private static final String defaultEmergencyMessage = "Nincs értesítés";
+	private static final String defaultEmergencyMessage = "";
 	
-	private static final String defaultAlarmMessage = "Nincs riasztás";
-	private static final String alarmTurnedOn = "Élesítve";
-	private static final String alarmTurnedOff = "Kikapcsolva";
-	private static final int defaultAlarmCounterValue = 30;
+	private static final String defaultAlarmMessage = " ";
+	private static final String alarmTurnedOn = "Activated";
+	private static final String alarmTurnedOff = "Deactivated";
+	private static final int defaultAlarmCounterValue = 10;
 	
-	private static final String defaultBackupMessage = "Nincs folyamatban";
-	private static final String inProgressMessage = "Folyamatban...";
-	private static final String sendingDataMessage = "Adatok küldése...";
-	private static final String receivingDataMessage = "Adatok fogadása...";
+	private static final String defaultBackupMessage = "Backup done.";
+	private static final String inProgressMessage = "In progress...";
+	private static final String sendingDataMessage = "Saving data in progress...";
+	private static final String serversTurnedOn = "Running";
+	private static final String serversTurnedOff = "Turned off.";
 	
-	private static final String doorsOpenedMessage = "Nyitva";
-	private static final String doorsClosedMessage = "Zárva";
+	private static final String doorsOpenedMessage = "Opened";
+	private static final String doorsClosedMessage = "Closed";
 	
 	private int alarmCounter = defaultAlarmCounterValue;
 
@@ -30,39 +31,37 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 	private JTextField alarmStateTF;
 	private JTextField alarmCounterTF;
 	private JTextField alarmMessageTF;
-	private JTextField backupTF;
+	private JTextField serversState;
 	private JTextField DoorsTF;
 	
 	public AgentInfoPanel(int roomNumber) {
-		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		super(new FlowLayout(FlowLayout.RIGHT, 0, 0));
 
-		final String panelTitle = GUI.roomControlSubPanelTitle + " " + roomNumber;
+		final String panelTitle = GUI.roomControlSubPanelTitle + " " + (roomNumber + 1);
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), panelTitle, TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
-		
-//		setPreferredSize(new Dimension(100, 50));
+
 		
 		fireFightersTF = new JTextField();
-		createSubPanelWithLabel("Tűzoltók értesítése", fireFightersTF, defaultEmergencyMessage, 10);
+		createSubPanelWithLabel("Firefighters state", fireFightersTF, defaultEmergencyMessage, 10);
 
 		PoliceTF = new JTextField();
-		createSubPanelWithLabel("Rendőrség értesítése", PoliceTF, defaultEmergencyMessage, 10);
+		createSubPanelWithLabel("Police state", PoliceTF, defaultEmergencyMessage, 10);
 		
-		backupTF = new JTextField();
-		createSubPanelWithLabel("Biztonsági mentés", backupTF, defaultBackupMessage, 10);
+		serversState = new JTextField();
+		createSubPanelWithLabel("Server state", serversState, serversTurnedOn, 10);
 		
 		DoorsTF = new JTextField();
-		createSubPanelWithLabel("Ajtók állapota", DoorsTF, doorsOpenedMessage, 10);
+		createSubPanelWithLabel("Door state", DoorsTF, doorsOpenedMessage, 10);
 		
 		alarmStateTF = new JTextField();
-		createSubPanelWithLabel("Riasztó állapota", alarmStateTF, alarmTurnedOff, 10);
+		createSubPanelWithLabel("Alarm state", alarmStateTF, alarmTurnedOff, 10);
 		
 		alarmCounterTF = new JTextField();
-		createSubPanelWithLabel("Riasztó számláló", alarmCounterTF, String.valueOf(alarmCounter), 10);
+		createSubPanelWithLabel("Alarm countdown", alarmCounterTF, String.valueOf(alarmCounter), 10);
 
 		alarmMessageTF = new JTextField();
-		createSubPanelWithLabel("Riasztó üzenet", alarmMessageTF, defaultAlarmMessage, 33);
+		createSubPanelWithLabel("Agent message", alarmMessageTF, defaultAlarmMessage, 33);
 		
 	}
 
@@ -79,7 +78,7 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 		add(subPanel);
 	}
 	
-	public void decreaseAlarmTimer() {
+	synchronized public void decreaseAlarmTimer() {
 		if(alarmCounter > 0)
 			alarmCounter--;
 		alarmCounterTF.setText(String.valueOf(alarmCounter));
@@ -89,17 +88,16 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 		return alarmCounter == 0;
 	}
 	
-	public void activateAlarm() {
+	public void resetAlarmCounter(){
 		alarmCounter = defaultAlarmCounterValue;
 		alarmCounterTF.setText(String.valueOf(alarmCounter));
-		
+	}
+	
+	public void activateAlarm() {		
 		alarmStateTF.setText(alarmTurnedOn);
 	}
 	
-	public void deactivateAlarm() {
-		alarmCounter = defaultAlarmCounterValue;
-		alarmCounterTF.setText(String.valueOf(alarmCounter));
-		
+	public void deactivateAlarm() {		
 		alarmStateTF.setText(alarmTurnedOff);
 	}
 
@@ -110,18 +108,12 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 			alarmMessageTF.setText("" + message);
 	}
 
-	public void callFireFighers(boolean value) {
-		if (value)
-			fireFightersTF.setText(inProgressMessage);
-		else
-			fireFightersTF.setText(defaultEmergencyMessage);
+	public void callFireFighers(String s) {
+		fireFightersTF.setText(s);
 	}
 
-	public void callPolice(boolean value) {
-		if (value)
-			PoliceTF.setText(inProgressMessage);
-		else
-			PoliceTF.setText(defaultEmergencyMessage);
+	public void callPolice(String s) {
+		PoliceTF.setText(s);
 	}
 
 	public void closeDoors() {
@@ -133,33 +125,39 @@ public class AgentInfoPanel extends JPanel implements AgentInfo {
 	}
 
 	public void sendBackupData() {
-		backupTF.setText(sendingDataMessage);
-	}
-	
-	public void receiveBackupData() {
-		backupTF.setText(receivingDataMessage);
+		serversState.setText(sendingDataMessage);
 	}
 	
 	public void stopBackup() {
-		backupTF.setText(defaultBackupMessage);
+		serversState.setText(defaultBackupMessage);
+	}
+	
+	public void startServers(){
+		serversState.setText(serversTurnedOn);
+	}
+
+	public void stopServers(){
+		serversState.setText(serversTurnedOff);
 	}
 
 }
 
 interface AgentInfo {
 	public void decreaseAlarmTimer();	
+	public void resetAlarmCounter();
 	public boolean isAlarmCounterReachedZero();	
 	public void activateAlarm();
 	public void deactivateAlarm();
 	public void setAlarm(String message);
 
-	public void callFireFighers(boolean value);
-	public void callPolice(boolean value);
+	public void callFireFighers(String s);
+	public void callPolice(String s);
 
 	public void closeDoors();
 	public void openDoors();
 
 	public void sendBackupData();	
-	public void receiveBackupData();
 	public void stopBackup();
+	public void startServers();
+	public void stopServers();
 }

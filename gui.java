@@ -9,31 +9,45 @@ import java.util.List;
 
 public class GUI implements ActionListener {
 	public static final String windowTitle = "Intelligens Elosztott Rendszerek - 2018";
-	public static final String roomControlPanelTitle = "Szerverszoba szenzor kezelőpanel";
-	public static final String roomControlSubPanelTitle = "Szerverszoba ";
-	public static final String infoPanelTitle = "Rendszer információk";
-	public static final String consolePanelTitle = "Rendszer konzol";
+	public static final String roomControlPanelTitle = "Server room control panel";
+	public static final String roomControlSubPanelTitle = "Server room ";
+	public static final String infoPanelTitle = "System information";
+	public static final String consolePanelTitle = "System Console";
 	public static final int numberOfAgents = 4;
 
 	Window window;
+	
+	Env environment;
 
-	public GUI() {
+	public GUI(Env env) {
 		window = new Window(this);
+		
+		environment = env;
+	}
+	
+	public GUI(){
+		window = new Window(this);
+	}
+	
+	public void refreshSensorStates(){
+		actionPerformed(null);
 	}
 
 	// Szenzor adatok küldése gomb eseménykezelő
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		window.getRoomControls();
-		// TODO send data to env
-
+		environment.updateSensorStates(window.getRoomControls());
 	}
 
 	public void log(String str) {
-		String timeStamp = new SimpleDateFormat("HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
+		String timeStamp = new SimpleDateFormat("HH:mm:ss.S").format(Calendar.getInstance().getTime());
 
-		String logStr = " [ " + timeStamp.toString() + " ] " + " - " + str;
+		String logStr = " [ " + timeStamp.toString() + " ] " + str;
 		window.log(logStr);
+	}
+	
+	public void log(String agentName, String str){
+		log(" [ " + agentName + " ] " + str);
 	}
 	
 	public List<RoomControl> getRoomControls() {

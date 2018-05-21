@@ -13,8 +13,8 @@ import java.awt.event.ActionEvent;
 
 public class RoomControlMainPanel extends JPanel {
 	
-	private static final String clearFieldsStr = "Mezők törlése";
-	private static final String sendSensorDataStr = "Szenzor adatok küldése";
+	private static final String clearFieldsStr = "Clear fields";
+	private static final String sendSensorDataStr = "Send sensor data";
 	
 	private List<RoomControl> roomControls;
 
@@ -23,7 +23,7 @@ public class RoomControlMainPanel extends JPanel {
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), GUI.roomControlPanelTitle,
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
-		setPreferredSize(new Dimension(235, 600));
+		setPreferredSize(new Dimension(250, 600));
 		
 		roomControls = new LinkedList<>();
 		
